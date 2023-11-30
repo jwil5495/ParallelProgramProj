@@ -1,0 +1,19 @@
+import time
+
+def memoized_fibonacci(n, arr={}):
+    if n in arr:
+        return arr[n]
+    if n <= 0:
+        arr[n] = 0
+    elif n == 1:
+        arr[n] = 1
+    else:
+        arr[n] = memoized_fibonacci(n - 1, arr) + memoized_fibonacci(n - 2, arr)
+    return arr[n]
+
+
+n = 100
+start_time = time.time()
+result_memoized = memoized_fibonacci(n)
+end_time = time.time()
+print(f"Memoized Fibonacci result: {result_memoized}, Time taken: {end_time - start_time} seconds")
