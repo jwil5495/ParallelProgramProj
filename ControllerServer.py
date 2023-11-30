@@ -14,16 +14,19 @@ input_queue = Queue()
 
 class EchoServerClientProtocol:
     def connection_made(self, transport):
+        # Called when a connection is made
         peername = transport.get_extra_info('peername')
         print('Connection from {}'.format(peername))
         self.transport = transport
 
     def data_received(self, data):
+        # Called when data is received
         message = data.decode()
         print('Data received: {!r}'.format(message))
         self.transport.write(data)
 
 def CheckPort(port):
+    # Check if a port is available
     sc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = False
     try:
@@ -35,6 +38,7 @@ def CheckPort(port):
     return result
 
 def AllocatePort():
+    # Allocate the next available port
     global PT_OP
     while True:
         PT_OP += 1
@@ -96,6 +100,7 @@ def ServerThreads(host, port):
         exit()
 
 def memoized_fibonacci(n, arr={}):
+    # Recursive function for memoized Fibonacci calculation
     if n in arr:
         return arr[n]
     if n <= 0:
@@ -115,6 +120,4 @@ while True:
         user_input = input("Enter a value:")
         input_queue.put(user_input)  # Put user input into the queue
 
-    # Example of creating additional server threads (you can adjust the parameters accordingly)
-    thread = threading.Thread(target=ServerThreads, args=(HOST, PORT + 1))
-    thread.start()
+
